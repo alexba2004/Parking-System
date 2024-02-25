@@ -1,7 +1,7 @@
 <?php
 session_start();
-$idUsuario=$_SESSION['id'];
-$nombre=$_SESSION['name'];
+$idUsuario = $_SESSION['id'];
+$nombre = $_SESSION['name'];
 
 if (!isset($_SESSION['loggedin'])) {
   echo '<script language="javascript">alert("Debes de iniciar sesión"); window.location.href="index.php"; </script>';
@@ -19,21 +19,37 @@ if (!isset($_SESSION['loggedin'])) {
   <title>Menu</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/estilos.css" rel="stylesheet">
-  <script src="scripts/js/funciones.js"></script>
   <script src="scripts/js/jquery.min.js"></script>
-  <script>setInterval("location.reload()", 15000);</script>
-  <script src="scripts/js/bootstrap.min.js"></script>
+  <script src="scripts/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <style>
+    /* Estilos personalizados */
+    body {
+      padding-top: 56px; /* Ajustar según el tamaño de la barra de navegación */
+    }
+    .navbar-brand img {
+      width: 40px; /* Ajustar el tamaño del logo */
+    }
+    .card {
+      margin-top: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+      padding: 20px;
+    }
+  </style>
 </head>
 
-<body class="px-4">
+<body>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container-fluid">
-        <img src="./imagenes/img.png" style="width:2em" alt="">
+        <a class="navbar-brand" href="#">
+          <img src="./imagenes/img.png" alt="">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
           aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -42,30 +58,29 @@ if (!isset($_SESSION['loggedin'])) {
           <ul class="navbar-nav">
            
             <li class="nav-item">
-
-              <a class="nav-link active" onclick="loadDiv('#contenido','inicio.php');" aria-current="page"
-                href="#">inicio</a>
+              <a class="nav-link active" onclick="loadDiv('inicio.php');" aria-current="page"
+                href="#">Inicio</a>
             </li>
             <li class="nav-item">
               <span class="nav-link">|</span>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="loadDiv('#contenido','registros.php');">Registros</a>
+              <a class="nav-link" href="#" onclick="loadDiv('registros.php');">Registros</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="loadDiv('#contenido','cajones.php');">Cajones</a>
+              <a class="nav-link" href="#" onclick="loadDiv('cajones.php');">Cajones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="loadDiv('#contenido','clientes.php');">Clientes</a>
+            <a class="nav-link" onclick="loadDiv('clientes.php');" href="#">Clientes</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="loadDiv('#contenido','vehiculos.php');">Vehiculos</a>
+              <a class="nav-link" href="#" onclick="loadDiv('vehiculos.php');">Vehiculos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="loadDiv('#contenido','tarifas.php');">Tarifas</a>
+              <a class="nav-link" href="#" onclick="loadDiv('tarifas.php');">Tarifas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="loadDiv('#contenido','servomotor.php');">Servomotor</a>
+              <a class="nav-link" href="#" onclick="loadDiv('servomotor.php');">Servomotor</a>
             </li>
             <li class="nav-item">
               <span class="nav-link">|</span>
@@ -76,10 +91,9 @@ if (!isset($_SESSION['loggedin'])) {
                 Otros
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="#" onclick="loadDiv('#contenido','encargados.php');">encargados</a></li>
-                <li><a class="dropdown-item" href="#" onclick="loadDiv('#contenido','reportes.php');">Reportes</a></li>
-                <li><a class="dropdown-item" href="#" onclick="closeSession ();">Salir</a></li>
-
+                <li><a class="dropdown-item" href="#" onclick="loadDiv('encargados.php');">Encargados</a></li>
+                <li><a class="dropdown-item" href="#" onclick="loadDiv('reportes.php');">Reportes</a></li>
+                <li><a class="dropdown-item" href="#" onclick="closeSession();">Salir</a></li>
               </ul>
             </li>
           </ul>
@@ -87,18 +101,34 @@ if (!isset($_SESSION['loggedin'])) {
       </div>
     </nav>
   </header>
-  <div id="contenido">
-  <div class="row mt-2 px-5">
-    <div class="b-4">
+
+  <div class="container mt-5" id="contenido">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
         <div class="card">
-            <div class="card-body text-center" >
-              <p>Bienvenido <b><?php echo $idUsuario ?></b> </p>
-
-
+          <div class="card-body text-center">
+            <p class="h4">Bienvenido <b><?php echo $nombre ?></b></p>
+          </div>
         </div>
+      </div>
     </div>
   </div>
-  <script src="scripts/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+function loadDiv(page) {
+  $.ajax({
+    url: page,
+    success: function(response) {
+      $('#contenido').html(response);
+    },
+    error: function(xhr, status, error) {
+      console.error(xhr.responseText);
+    }
+  });
+}
+
+
+  </script>
 </body>
 
 </html>

@@ -1,5 +1,4 @@
-<script src="scripts/js/funciones.js"></script>
-<script src="scripts/js/jquery.min.js"></script>
+
 <div class="row mt-2 px-2 mb-3">
     <div class="col mx-auto my-auto">
         <div class="card">
