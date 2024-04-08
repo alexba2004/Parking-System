@@ -4,7 +4,7 @@
     $DATABASE_HOST = 'localhost';      // Servidor
     $DATABASE_USER = 'root';           // Usuario
     $DATABASE_PASS = '';               // Contraseña
-    $DATABASE_NAME = 'estacionamieto1'; // Nombre de la base
+    $DATABASE_NAME = 'db_parking'; // Nombre de la base
     $DATABASE_PORT = '3306';           // Puerto
 
     // Conexión con la base de datos
